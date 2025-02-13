@@ -30,7 +30,16 @@ The application uses **WebSocket** to enable real-time communication between use
 
 ### Steps to Run the Project
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/your-username/multi-user-whiteboard.git
-   cd multi-user-whiteboard
+1. **Install Node Js**:
+   You can download it from [nodejs.org](https://nodejs.org/).
+
+2. **Navgigate to the folder directory using the cd command**:
+   For example `cd whiteboard-app`
+
+3. **Run the server** :
+   Run the server using `node server.js`
+
+4. **Run index.html file on the browser**:
+   Run the source file (`index.html`) on several tabs or browsers to test the real time synchronization.
+
+**Note :** The detailed info about the project is given in the file `info.txt`.
