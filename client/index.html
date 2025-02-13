@@ -19,9 +19,33 @@
         #clear {
             margin-top: 10px;
         }
+
+        header {
+            background-color: #6200ea;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #clear {
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
     </style>
 </head>
 <body>
+    <header>
+        Multi-User Whiteboard
+    </header>
     <canvas id="canvas"></canvas>
     <button id="clear">Clear</button>
     <script>
@@ -86,7 +110,10 @@
         // Handle mouse events for drawing
         window.addEventListener('mousedown', (e) => {
             draw = true;
-            [x, y] = [e.clientX, e.clientY];
+            // Recalculate canvas offset dynamically
+            const canvasRect = canvas.getBoundingClientRect();
+            x = e.clientX - canvasRect.left;
+            y = e.clientY - canvasRect.top;
         });
 
         window.addEventListener('mouseup', () => draw = false);
@@ -94,8 +121,10 @@
         window.addEventListener('mousemove', (e) => {
             if (!draw) return;
 
-            const currentX = e.clientX;
-            const currentY = e.clientY;
+            // Recalculate canvas offset dynamically
+            const canvasRect = canvas.getBoundingClientRect();
+            const currentX = e.clientX - canvasRect.left;
+            const currentY = e.clientY - canvasRect.top;
 
             // Send drawing data to the server
             socket.send(JSON.stringify({ x, y, currentX, currentY, color: userColor }));
@@ -103,6 +132,7 @@
             // Draw locally
             drawLine(x, y, currentX, currentY, userColor);
 
+            // Update starting coordinates
             [x, y] = [currentX, currentY];
         });
 
