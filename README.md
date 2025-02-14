@@ -36,8 +36,8 @@ The application uses **WebSocket** to enable real-time communication between use
 2. **Install ws library**:
    Install the `ws` websocket library using the command `npm install ws`.
 
-4. **Navgigate to the folder directory using the cd command**:
-   For example `cd whiteboard-app`
+4. **Navigate to the folder directory using the cd command**:
+   Open Command Prompt in your laptop/pc and navigate to the folder directory . For example `cd downloads/whiteboard-app`
 
 5. **Run the server** :
    Run the server using `node server.js`
