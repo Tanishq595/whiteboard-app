@@ -11,10 +11,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            height: 100vh;
+            overflow: hidden;
         }
         #canvas {
             border: 1px solid black;
             cursor: crosshair;
+            width: 100%;
+            height: 100%;
         }
         #clear {
             margin-top: 10px;
@@ -51,8 +55,9 @@
     <script>
         const canvas = document.getElementById("canvas");
         const context = canvas.getContext("2d");
-        canvas.height = window.innerHeight - 100;  //canvas height
-        canvas.width = window.innerWidth - 50;  //canvas width
+
+        // Set initial canvas size
+        resizeCanvas();
 
         context.lineWidth = 5;  //brush size
 
@@ -108,23 +113,22 @@
         }
 
         // Handle mouse events for drawing
-        window.addEventListener('mousedown', (e) => {
+        canvas.addEventListener('mousedown', (e) => {
             draw = true;
-            // Recalculate canvas offset dynamically
-            const canvasRect = canvas.getBoundingClientRect();
-            x = e.clientX - canvasRect.left;
-            y = e.clientY - canvasRect.top;
+            // Get the correct starting point
+            const rect = canvas.getBoundingClientRect();
+            x = e.clientX - rect.left;
+            y = e.clientY - rect.top;
         });
 
-        window.addEventListener('mouseup', () => draw = false);
+        canvas.addEventListener('mouseup', () => draw = false);
 
-        window.addEventListener('mousemove', (e) => {
+        canvas.addEventListener('mousemove', (e) => {
             if (!draw) return;
 
-            // Recalculate canvas offset dynamically
-            const canvasRect = canvas.getBoundingClientRect();
-            const currentX = e.clientX - canvasRect.left;
-            const currentY = e.clientY - canvasRect.top;
+            const rect = canvas.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
 
             // Send drawing data to the server
             socket.send(JSON.stringify({ x, y, currentX, currentY, color: userColor }));
@@ -153,6 +157,17 @@
             // Send a clear request to the server
             socket.send(JSON.stringify({ clear: true }));
         };
+
+        // Function to resize the canvas
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight - 100; // Adjust for header and button
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
 
         // Connect to the WebSocket server
         connectWebSocket();
