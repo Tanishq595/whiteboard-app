@@ -45,4 +45,7 @@ The application uses **WebSocket** to enable real-time communication between use
 6. **Run index.html file on the browser**:
    Run the source file (`index.html`) on several tabs or browsers to test the real time synchronization.
 
+7. **Close the server**:
+   To close the server, press `Ctrl + C` on the Command Prompt.
+
 **Note :** The detailed info about the project is given in the file `info.txt`.
